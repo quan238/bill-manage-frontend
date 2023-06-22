@@ -12,8 +12,22 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/lab": "^5.0.0-alpha.106",
+    "@mui/material": "^5.10.12",
+    "@mui/x-date-pickers": "^5.0.6",
+    "merge": "^2.1.1",
+    "notistack": "^3.0.1",
+    "simplebar-react": "^2.4.3",
     "react": "^18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.1.1",
+    "react-router-dom": "^6.13.0",
     "sass": "^1.63.4"
   },
   "devDependencies": {
@@ -37,6 +51,7 @@
     "prop-types": "^15.8.1",
     "storybook": "^7.0.22",
     "typescript": "^5.0.2",
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "vite-tsconfig-paths": "^4.2.0"
   }
 }

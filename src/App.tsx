@@ -1,10 +1,17 @@
-import { useState } from "react";
-import "./theme/App.scss";
+import MuiTheme from "theme/MuiTheme";
+import SnackbarProvider from "components/Snackbar/SnackbarProvider";
+import Routes from "routes";
+
+import "simplebar/dist/simplebar.min.css";
 
 function App() {
-  const [count, setCount] = useState<number>(0);
-
-  return <>{count}</>;
+  return (
+    <MuiTheme>
+      <SnackbarProvider>
+        <Routes />
+      </SnackbarProvider>
+    </MuiTheme>
+  );
 }
 
 export default App;
