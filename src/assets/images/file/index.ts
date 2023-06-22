@@ -1,0 +1,8 @@
+export { default as TPNG } from './png.png'
+export { default as TJPG } from './jpg.png'
+export { default as TPDF } from './pdf.png'
+export { default as TXLS } from './xls.png'
+export { default as TWORD } from './word.png'
+export { default as TPPTX } from './pptx.png'
+export { default as TMULTIFILE } from './multifile.png'
+export { default as LARGEPDF } from './large-pdf.png'

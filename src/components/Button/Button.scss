@@ -1,0 +1,28 @@
+.button {
+    border: 1px solid black;
+    color: black;
+    background: transparent;
+    padding: 1rem;
+}
+
+.button-small {
+    padding: 0.5rem;
+}
+
+.button-medium {
+    padding: 1rem;
+}
+
+.button-large {
+    padding: 1.5rem;
+}
+
+.button-danger {
+    color: white;
+    background: tomato;
+}
+
+.button-success {
+    color: white;
+    background: greenyellow;
+}
