@@ -1,3 +1,10 @@
+import SearchInput from "components/SearchInput/SearchInput";
+
 export default function DashboardPage() {
-  return <div>Dashboard Page</div>;
+  return (
+    <div>
+      <SearchInput /> 
+      
+    </div>
+  );
 }

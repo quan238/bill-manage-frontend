@@ -38,7 +38,7 @@ const MainLayout: FC = () => {
       />
       <BodyWrapper compact={sidebarCompact ? 1 : 0}>
         {/* <DashboardNavbar handleDrawerToggle={handleMobileDrawerToggle} /> */}
-        <InnerWrapper>
+        <InnerWrapper p={4}>
           <Outlet />
         </InnerWrapper>
       </BodyWrapper>
