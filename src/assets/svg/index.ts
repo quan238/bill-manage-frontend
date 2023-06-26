@@ -1,6 +1,0 @@
-export { default as FlagVietNam } from './vietnam.svg'
-export { default as FlagCambodia } from './cambodia.svg'
-export { default as FlagUK } from './flag-uk.svg'
-export { default as FlagVN } from './flag-vi.svg'
-export { default as Calendar } from './calendar.svg'
-export { default as DeleteBack } from './delete-back.svg'

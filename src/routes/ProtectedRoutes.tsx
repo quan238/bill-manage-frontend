@@ -1,13 +1,12 @@
 import React from "react";
-
-import Error403 from "pages/403";
 import { useAuth } from "hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 export function ProtectedRoute({ children }) {
   const { user } = useAuth();
   if (!user) {
     // user is not authenticated
-    return <Error403 />;
+    return <Navigate to="/login" />;
   }
   return children;
 }
