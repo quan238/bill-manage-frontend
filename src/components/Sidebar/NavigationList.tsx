@@ -6,7 +6,8 @@ export const navigations = [
   {
     name: "Billing",
     icon: duotone.Order,
-    children: [{ name: "Billing List", path: "/billings" }],
+    path: "/billings",
+    // children: [{ name: "Billing List", path: "/billings" }],
   },
   { name: "Customers", icon: duotone.Customers, path: "/customers" },
   // {

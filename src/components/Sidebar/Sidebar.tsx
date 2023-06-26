@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Avatar, Box, Theme, useMediaQuery } from "@mui/material";
-import LayoutDrawer from "layout/LayoutDrawer";
+import LayoutDrawer from "layout/Main/LayoutDrawer";
 import Scrollbar from "components/Scrollbar";
 import { FlexBetween } from "components/Flex-box";
 import { navigations } from "./NavigationList";

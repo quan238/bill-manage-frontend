@@ -1,5 +1,5 @@
-import { lazy } from 'react'
+import { lazy } from "react";
 
 export const MainLayout = lazy(
-  () => import('./MainLayout' /* webpackChunkName: "Layout_MainLayout" */)
-)
+  () => import("./Main/MainLayout" /* webpackChunkName: "Layout_MainLayout" */)
+);
