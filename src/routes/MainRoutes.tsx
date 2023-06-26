@@ -3,6 +3,7 @@ import { lazy } from "react";
 // project import
 import Loadable from "components/Loader/Loadable";
 import MainLayout from "layout/Main/MainLayout";
+import { ProtectedRoute } from "./ProtectedRoutes";
 
 // render
 const DashboardPage = Loadable(lazy(() => import("pages/Dashboard")));
@@ -13,7 +14,11 @@ const CustomerPage = Loadable(lazy(() => import("pages/Customers")));
 
 const MainRoutes = {
   path: "/",
-  element: <MainLayout />,
+  element: (
+    <ProtectedRoute>
+      <MainLayout />
+    </ProtectedRoute>
+  ),
   children: [
     {
       path: "/",
