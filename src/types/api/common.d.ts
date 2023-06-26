@@ -23,5 +23,5 @@ export type TApiErrorReponse = {
   _metadata: TMetadata;
   statusCode: number;
   message: string;
-  errors: TApiError[];
+  errors?: TApiError[];
 };

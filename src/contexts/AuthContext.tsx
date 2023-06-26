@@ -20,6 +20,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { useLogin } from "apis";
 import { toast } from "react-hot-toast";
+import { TLoginResponse } from "types/api";
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
@@ -46,25 +47,19 @@ const AuthProvider = ({ children }: Props) => {
   const [accessToken, setAccessToken] = useState(defaultProvider.accessToken);
   const [loading, setLoading] = useState<boolean>(defaultProvider.loading);
   // ** Hooks
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
 
   // ** Query
-  const { mutate: loginMutation, isLoading: loginLoading } = useLogin({
-    onSuccess: (data) => {
-      window.localStorage.setItem(
-        config.auth.storageTokenKeyName,
-        data.accessToken
-      );
-
-      setUser({ ...data.userData });
+  const { mutate: loginMutation } = useLogin({
+    onSuccess: ({ data }: { data: TLoginResponse }) => {
+      localStorage.setItem(config.auth.storageTokenKeyName, data.accessToken);
       setAccessToken(data.accessToken);
-      window.localStorage.setItem("userData", JSON.stringify(data.userData));
-      navigate("/dashboard");
-    },
-    onError: (err) => {
-      console.log(err);
-      toast.error(err.response.data.error);
+      navigate("/dashboard", { replace: true });
+      toast.success("Login success", {
+        position: "top-center",
+        duration: 3000,
+      });
     },
   }); //
 
@@ -81,30 +76,30 @@ const AuthProvider = ({ children }: Props) => {
       )!;
       if (storedToken) {
         setLoading(true);
-        await axios
-          .get("", {
-            headers: {
-              Authorization: `Bearer ${storedToken}`,
-            },
-          })
-          .then(async (response) => {
-            setLoading(false);
-            setUser({ ...response.data });
-            setAccessToken(storedToken);
-          })
-          .catch(() => {
-            localStorage.removeItem("userData");
-            localStorage.removeItem("refreshToken");
-            localStorage.removeItem("accessToken");
-            setUser(null);
-            setLoading(false);
-            if (
-              config.auth.onTokenExpiration === "logout" &&
-              !location.pathname.includes("login")
-            ) {
-              navigate("/login");
-            }
-          });
+        // await axios
+        //   .get("", {
+        //     headers: {
+        //       Authorization: `Bearer ${storedToken}`,
+        //     },
+        //   })
+        //   .then(async (response) => {
+        //     setLoading(false);
+        //     setUser({ ...response.data });
+        //     setAccessToken(storedToken);
+        //   })
+        //   .catch(() => {
+        //     localStorage.removeItem("userData");
+        //     localStorage.removeItem("refreshToken");
+        //     localStorage.removeItem("accessToken");
+        //     setUser(null);
+        //     setLoading(false);
+        //     if (
+        //       config.auth.onTokenExpiration === "logout" &&
+        //       !location.pathname.includes("login")
+        //     ) {
+        //       navigate("/login");
+        //     }
+        //   });
       } else {
         setLoading(false);
       }
@@ -113,17 +108,8 @@ const AuthProvider = ({ children }: Props) => {
     initAuth();
   }, []);
 
-  const handleLogin = (
-    params: LoginParams,
-    errorCallback?: ErrCallbackType
-  ) => {
+  const handleLogin = (params: LoginParams) => {
     loginMutation(params);
-    // .then(async (response) => {
-
-    // })
-    // .catch((err) => {
-    //   if (errorCallback) errorCallback(err);
-    // });
   };
 
   const handleLogout = () => {

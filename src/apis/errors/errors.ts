@@ -37,7 +37,7 @@ export const HandleResponseError = (error: AxiosError<TApiErrorReponse>) => {
     // mainStore.store.dispatch(signOutRequest());
   }
 
-  if (errorData.errors.length > 0) {
+  if (errorData?.errors && errorData.errors.length > 0) {
     for (const item of errorData.errors) {
       toast.error(item.message);
     }

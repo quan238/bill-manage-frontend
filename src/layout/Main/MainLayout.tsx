@@ -3,6 +3,7 @@ import { Box, styled } from "@mui/material";
 import { Fragment, useState } from "react";
 import Sidebar from "components/Sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
+import DashboardNavbar from "components/Navbar/DashboardNavbar";
 
 // styled components
 const BodyWrapper = styled(Box)<{ compact: number }>(({ theme, compact }) => ({
@@ -37,7 +38,7 @@ const MainLayout: FC = () => {
         setShowMobileSideBar={handleMobileDrawerToggle}
       />
       <BodyWrapper compact={sidebarCompact ? 1 : 0}>
-        {/* <DashboardNavbar handleDrawerToggle={handleMobileDrawerToggle} /> */}
+        <DashboardNavbar handleDrawerToggle={handleMobileDrawerToggle} />
         <InnerWrapper p={4}>
           <Outlet />
         </InnerWrapper>
