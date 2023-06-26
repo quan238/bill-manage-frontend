@@ -1,34 +1,29 @@
 // ** React Imports
-import { useState } from "react";
+import { FC, useCallback, useState } from "react";
 
 // ** MUI Components
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import IconButton from "@mui/material/IconButton";
 import Box, { BoxProps } from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled, useTheme } from "@mui/material/styles";
-import FormHelperText from "@mui/material/FormHelperText";
-import InputAdornment from "@mui/material/InputAdornment";
 import MuiFormControlLabel, {
   FormControlLabelProps,
 } from "@mui/material/FormControlLabel";
 
 // ** Third Party Imports
 import * as yup from "yup";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 
+// ** Import
 import { Link } from "react-router-dom";
 import { H1, Paragraph } from "components/Typography";
-import {
-  RemoveRedEyeOutlined,
-  VisibilityOffOutlined,
-} from "@mui/icons-material";
+import { useAuth } from "hooks/useAuth";
+import FooterIllustrations from "./components/FooterIllustrations";
+import MyTextField from "components/Form/TextField";
+import { useFormik } from "formik";
+import EyeToggleButton from "./components/EyeToggleButton";
+import SocialButtons from "./components/SocialButtons";
+import { toast } from "react-hot-toast";
 
 // ** Styled Components
 const LoginIllustrationWrapper = styled(Box)<BoxProps>(({ theme }) => ({
@@ -75,62 +70,13 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(
   })
 );
 
-const schema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().min(5).required(),
-});
+const fbStyle = { background: "#3B5998", color: "white" };
+const googleStyle = { background: "#4285F4", color: "white" };
 
-const defaultValues = {
-  password: "123456",
-  email: "quantran2381@gmail.com",
-};
+type WrapperProps = { passwordvisibility?: boolean };
 
-interface FormData {
-  email: string;
-  password: string;
-}
-
-const LoginPage = () => {
-  const [rememberMe, setRememberMe] = useState<boolean>(true);
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  // ** Hooks
-  //   const auth = useAuth();
-  const theme = useTheme();
-  //   const bgColors = useBgColor();
-  //   const { settings } = useSettings();
-  const hidden = useMediaQuery(theme.breakpoints.down("md"));
-
-  // ** Vars
-  //   const { skin } = settings;
-
-  const {
-    control,
-    setError,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues,
-    mode: "onBlur",
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit = (data: FormData) => {
-    const { email, password } = data;
-    // auth.login({ email, password, rememberMe }, () => {
-    //   setError("email", {
-    //     type: "manual",
-    //     message: "Email or Password is invalid",
-    //   });
-    // });
-  };
-
-  // eslint-disable-next-line no-constant-condition
-  const imageSource = true
-    ? "auth-v2-login-illustration-bordered"
-    : "auth-v2-login-illustration";
-
-  return (
+export const Wrapper = styled<FC<WrapperProps & BoxProps>>(
+  ({ children, ...rest }) => (
     <Box
       sx={{
         display: "flex",
@@ -142,7 +88,67 @@ const LoginPage = () => {
             (theme.mixins.toolbar.minHeight as number) / 4
           )})`,
       }}
+      {...rest}
     >
+      {children}
+    </Box>
+  )
+)<BoxProps>(({ theme, passwordvisibility = false }) => ({
+  [theme.breakpoints.down("sm")]: { width: "100%" },
+  ".passwordEye": {
+    color: passwordvisibility
+      ? theme.palette.grey[600]
+      : theme.palette.grey[400],
+  },
+  ".facebookButton": { marginBottom: 10, ...fbStyle, "&:hover": fbStyle },
+  ".googleButton": { ...googleStyle, "&:hover": googleStyle },
+  ".agreement": { marginTop: 12, marginBottom: 24 },
+}));
+
+interface FormData {
+  email: string;
+  password: string;
+}
+
+const LoginPage = () => {
+  const [rememberMe, setRememberMe] = useState<boolean>(true);
+  const [passwordvisibility, setPasswordVisibility] = useState(false);
+
+  // ** Hooks
+  const auth = useAuth();
+  const theme = useTheme();
+  const hidden = useMediaQuery(theme.breakpoints.down("md"));
+
+  const onSubmit = (data: FormData) => {
+    const { email, password } = data;
+    auth.login({ email, password, rememberMe }, () => {
+      setFieldError("email", "Email or Password is invalid");
+      toast.error("Email or Password is invalid");
+    });
+  };
+
+  const {
+    values,
+    errors,
+    touched,
+    setFieldError,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+  } = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema: formSchema,
+  });
+
+  const togglePasswordVisibility = useCallback(() => {
+    setPasswordVisibility((visible) => !visible);
+  }, []);
+
+  const imageSource = "auth-v2-login-illustration-bordered";
+
+  return (
+    <Wrapper passwordvisibility={passwordvisibility}>
       {!hidden ? (
         <Box
           sx={{
@@ -159,7 +165,7 @@ const LoginPage = () => {
               src={`/assets/images/illustrations/${imageSource}-${theme.palette.mode}.png`}
             />
           </LoginIllustrationWrapper>
-          {/* <FooterIllustrationsV2 /> */}
+          <FooterIllustrations />
         </Box>
       ) : null}
       <RightWrapper
@@ -184,78 +190,48 @@ const LoginPage = () => {
               <H1>Welcome You 👋🏻</H1>
               <Paragraph>Đăng nhập vào hệ thống quản trị</Paragraph>
             </Box>
-            <form
-              noValidate
-              autoComplete="off"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <FormControl fullWidth sx={{ mb: 4 }}>
-                <Controller
-                  name="email"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange, onBlur } }) => (
-                    <TextField
-                      autoFocus
-                      label="Email"
-                      value={value}
-                      onBlur={onBlur}
-                      onChange={onChange}
-                      error={Boolean(errors.email)}
-                      placeholder="chauthmse@gmail.com"
+            <form onSubmit={handleSubmit}>
+              <MyTextField
+                mb={1.5}
+                fullWidth
+                name="email"
+                size="small"
+                type="email"
+                variant="outlined"
+                onBlur={handleBlur}
+                value={values.email}
+                onChange={handleChange}
+                label="Email or Phone Number"
+                placeholder="exmple@mail.com"
+                error={!!touched.email && !!errors.email}
+                helperText={(touched.email && errors.email) as string}
+              />
+
+              <MyTextField
+                mb={2}
+                fullWidth
+                size="small"
+                name="password"
+                label="Password"
+                autoComplete="on"
+                variant="outlined"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.password}
+                placeholder="*********"
+                type={passwordvisibility ? "text" : "password"}
+                error={!!touched.password && !!errors.password}
+                helperText={(touched.password && errors.password) as string}
+                InputProps={{
+                  endAdornment: (
+                    <EyeToggleButton
+                      show={passwordvisibility}
+                      click={togglePasswordVisibility}
                     />
-                  )}
-                />
-                {errors.email && (
-                  <FormHelperText sx={{ color: "error.main" }}>
-                    {errors.email.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel
-                  htmlFor="auth-login-v2-password"
-                  error={Boolean(errors.password)}
-                >
-                  Mật khẩu
-                </InputLabel>
-                <Controller
-                  name="password"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange, onBlur } }) => (
-                    <OutlinedInput
-                      value={value}
-                      onBlur={onBlur}
-                      label="Mật khẩu"
-                      onChange={onChange}
-                      id="auth-login-v2-password"
-                      error={Boolean(errors.password)}
-                      type={showPassword ? "text" : "password"}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            edge="end"
-                            onMouseDown={(e) => e.preventDefault()}
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            {showPassword ? (
-                              <RemoveRedEyeOutlined />
-                            ) : (
-                              <VisibilityOffOutlined />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                    />
-                  )}
-                />
-                {errors.password && (
-                  <FormHelperText sx={{ color: "error.main" }} id="">
-                    {errors.password.message}
-                  </FormHelperText>
-                )}
-              </FormControl>
+                  ),
+                }}
+              />
+
               <Box
                 sx={{
                   mb: 4,
@@ -282,23 +258,30 @@ const LoginPage = () => {
               </Box>
               <Button
                 fullWidth
-                size="large"
                 type="submit"
+                color="primary"
                 variant="contained"
-                sx={{ mb: 7 }}
+                sx={{ height: 44 }}
               >
-                Đăng nhập
+                Login
               </Button>
+              <SocialButtons />
             </form>
           </BoxWrapper>
         </Box>
       </RightWrapper>
-    </Box>
+    </Wrapper>
   );
 };
 
-// LoginPage.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>;
+const initialValues = {
+  email: "quantran2381@gmai.com",
+  password: "123456",
+};
 
-// LoginPage.guestGuard = true;
+const formSchema = yup.object().shape({
+  password: yup.string().required("Password is required"),
+  email: yup.string().email("Email is invalid").required("Email is required"),
+});
 
 export default LoginPage;
