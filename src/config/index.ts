@@ -1,5 +1,7 @@
 import { IEnvironment } from "types/common";
 
+const env: ImportMetaEnv = import.meta.env;
+
 const config: IEnvironment = {
   publicRuntimeConfig: {
     // Available on both server and client
@@ -9,11 +11,11 @@ const config: IEnvironment = {
   },
   auth: {
     registerEndpoint: "/jwt/register",
-    storageTokenKeyName: "accessToken",
-    onTokenExpiration: "refreshToken", // logout | refreshToken
+    storageTokenKeyName: env.VITE_STORAGE_TOKEN_KEY_NAME || "accessToken",
+    onTokenExpiration: env.VITE_ON_TOKEN_EXPIRATION || "refreshToken", // logout | refreshToken
   },
   api: {
-    baseURL: "http://localhost:3000",
+    baseURL: env.VITE_API_BASE_URL || "http://localhost:8888",
   },
 };
 

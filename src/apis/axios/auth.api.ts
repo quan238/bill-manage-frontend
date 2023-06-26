@@ -3,7 +3,7 @@ import { REST_API_AUTH } from "apis/urls";
 import { TApiReponse } from "types/api";
 import { TLoginPayload, TLoginResponse } from "types/api/auth";
 
-export const login = async (
+export const loginAPI = async (
   payload: TLoginPayload
 ): Promise<TApiReponse<TLoginResponse>> => {
   const url = REST_API_AUTH.LOGIN.uri;

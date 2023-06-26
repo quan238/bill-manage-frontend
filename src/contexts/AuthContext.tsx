@@ -18,6 +18,8 @@ import {
   UserDataType,
 } from "types/context";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useLogin } from "apis";
+import { toast } from "react-hot-toast";
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
@@ -46,6 +48,25 @@ const AuthProvider = ({ children }: Props) => {
   // ** Hooks
   const location = useLocation();
   const navigate = useNavigate();
+
+  // ** Query
+  const { mutate: loginMutation, isLoading: loginLoading } = useLogin({
+    onSuccess: (data) => {
+      window.localStorage.setItem(
+        config.auth.storageTokenKeyName,
+        data.accessToken
+      );
+
+      setUser({ ...data.userData });
+      setAccessToken(data.accessToken);
+      window.localStorage.setItem("userData", JSON.stringify(data.userData));
+      navigate("/dashboard");
+    },
+    onError: (err) => {
+      console.log(err);
+      toast.error(err.response.data.error);
+    },
+  }); //
 
   useEffect(() => {
     if (user) {
@@ -96,31 +117,13 @@ const AuthProvider = ({ children }: Props) => {
     params: LoginParams,
     errorCallback?: ErrCallbackType
   ) => {
-    axios
-      .post("", params)
-      .then(async (response) => {
-        params.rememberMe
-          ? window.localStorage.setItem(
-              config.auth.storageTokenKeyName,
-              response.data.accessToken
-            )
-          : null;
+    loginMutation(params);
+    // .then(async (response) => {
 
-        setUser({ ...response.data.userData });
-        setAccessToken(response.data.accessToken);
-        params.rememberMe
-          ? window.localStorage.setItem(
-              "userData",
-              JSON.stringify(response.data.userData)
-            )
-          : null;
-
-        navigate("/dashboard");
-      })
-
-      .catch((err) => {
-        if (errorCallback) errorCallback(err);
-      });
+    // })
+    // .catch((err) => {
+    //   if (errorCallback) errorCallback(err);
+    // });
   };
 
   const handleLogout = () => {

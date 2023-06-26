@@ -275,8 +275,8 @@ const LoginPage = () => {
 };
 
 const initialValues = {
-  email: "quantran2381@gmai.com",
-  password: "123456",
+  email: "superadmin@mail.com",
+  password: "aaAA@@123444",
 };
 
 const formSchema = yup.object().shape({

@@ -1,6 +1,6 @@
 export default {
   LOGIN: {
-    uri: "/auth/login",
+    uri: "v1/public/user/login",
     method: "POST",
   },
   REGISTER: {

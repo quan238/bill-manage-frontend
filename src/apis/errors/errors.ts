@@ -1,4 +1,6 @@
 import { AxiosError } from "axios";
+import { toast } from "react-hot-toast";
+import { TApiErrorReponse } from "types/api";
 import { TMessageError } from "types/common";
 
 export class ApiError extends Error {
@@ -28,29 +30,23 @@ export class ApiErrorForm extends Error {
 
 export type TApiError = ApiError | ApiErrorForm;
 
-export const HandleResponseError = (
-  error: AxiosError<{ message: string | TMessageError[] }>
-) => {
+export const HandleResponseError = (error: AxiosError<TApiErrorReponse>) => {
+  const errorData = error.response?.data;
+  const defaultErrorMessage = "Something went wrong!";
   if (error.response?.status === 401) {
     // mainStore.store.dispatch(signOutRequest());
   }
 
-  if (typeof error?.response?.data?.message === "object") {
-    throw new ApiErrorForm(
-      error.response.data.message as TMessageError[],
-      error.response?.status
-    );
+  if (errorData.errors.length > 0) {
+    for (const item of errorData.errors) {
+      toast.error(item.message);
+    }
+
+    throw new ApiError(defaultErrorMessage, error?.response?.status || 400);
   }
 
-  const errorMessage =
-    typeof error?.response?.data?.message === "string"
-      ? error.response.data.message
-      : error?.message || "Unknown";
-
-  // openNotification({
-  //   notificationType: 'Error',
-  //   message: errorMessage,
-  // })
+  const errorMessage = errorData.message || defaultErrorMessage;
+  toast.error(errorMessage);
 
   throw new ApiError(errorMessage, error?.response?.status || 400);
 };
