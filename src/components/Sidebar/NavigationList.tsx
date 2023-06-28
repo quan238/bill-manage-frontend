@@ -9,7 +9,18 @@ export const navigations = [
     path: "/billings",
     // children: [{ name: "Billing List", path: "/billings" }],
   },
-  { name: "Customers", icon: duotone.Customers, path: "/customers" },
+  {
+    name: "Customers",
+    icon: duotone.Customers,
+    path: "/customers",
+    children: [
+      { name: "Customer List", path: "/customers" },
+      {
+        name: "Create customer",
+        path: "/create-customer",
+      },
+    ],
+  },
   // {
   //   name: "Refunds",
   //   icon: duotone.Refund,

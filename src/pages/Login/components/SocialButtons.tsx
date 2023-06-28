@@ -10,7 +10,7 @@ type SocialButtonsProps = {
 };
 // =======================================
 
-const SocialButtons: FC<SocialButtonsProps> = (props) => {
+const SocialButtons: FC<SocialButtonsProps> = () => {
   return (
     <Fragment>
       <Box mb={3} mt={3.8}>

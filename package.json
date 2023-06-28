@@ -36,7 +36,8 @@
     "react-router-dom": "^6.13.0",
     "sass": "^1.63.4",
     "simplebar-react": "^2.4.3",
-    "yup": "^1.2.0"
+    "yup": "^0.32.11",
+    "react-dropzone": "^14.2.3"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^7.0.23",

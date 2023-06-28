@@ -8,7 +8,12 @@ import { ProtectedRoute } from "./ProtectedRoutes";
 // render
 const DashboardPage = Loadable(lazy(() => import("pages/Dashboard")));
 const BillingPage = Loadable(lazy(() => import("pages/Billings")));
-const CustomerListPage = Loadable(lazy(() => import("pages/CustomerList")));
+const CustomerListPage = Loadable(
+  lazy(() => import("pages/Customer/CustomerList"))
+);
+const CreateCustomerPage = Loadable(
+  lazy(() => import("pages/Customer/CreateCustomer"))
+);
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -31,6 +36,10 @@ const MainRoutes = {
     {
       path: "/customers",
       element: <CustomerListPage />,
+    },
+    {
+      path: "/create-customer",
+      element: <CreateCustomerPage />,
     },
     {
       path: "/billings",

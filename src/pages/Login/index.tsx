@@ -265,6 +265,7 @@ const LoginPage = () => {
               >
                 Login
               </Button>
+
               <SocialButtons />
             </form>
           </BoxWrapper>

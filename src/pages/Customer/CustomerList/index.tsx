@@ -18,11 +18,12 @@ import CustomerRow from "./components/CustomerRow";
 import NoDataFound from "components/No-data-found";
 import { useGetListCustomer } from "apis/hooks/customer.query";
 import { Loading } from "components/Loading";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerListPage() {
   const { data: customerListData, isLoading: loadingGetListCustomer } =
     useGetListCustomer();
-
+  const navigate = useNavigate();
   const {
     order,
     orderBy,
@@ -42,7 +43,7 @@ export default function CustomerListPage() {
       <SearchArea
         handleSearch={() => undefined}
         buttonText="Add Customer"
-        handleBtnClick={() => undefined}
+        handleBtnClick={() => navigate("/create-customer")}
         searchPlaceholder="Search Customer..."
       />
 

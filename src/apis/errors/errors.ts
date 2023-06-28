@@ -45,7 +45,7 @@ export const HandleResponseError = (error: AxiosError<TApiErrorReponse>) => {
     throw new ApiError(defaultErrorMessage, error?.response?.status || 400);
   }
 
-  const errorMessage = errorData.message || defaultErrorMessage;
+  const errorMessage = errorData?.message || defaultErrorMessage;
   toast.error(errorMessage);
 
   throw new ApiError(errorMessage, error?.response?.status || 400);

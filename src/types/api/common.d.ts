@@ -14,6 +14,12 @@ export type TApiReponse<T> = {
   data: T;
 };
 
+export type TCreateReponse = {
+  data: {
+    _id: string;
+  };
+};
+
 export type TApiError = {
   message: string;
   property: string;
