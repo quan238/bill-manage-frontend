@@ -16,8 +16,13 @@ import { tableHeading } from "./constant/customer.constant";
 import TablePagination from "components/Table/TablePagination";
 import CustomerRow from "./components/CustomerRow";
 import NoDataFound from "components/No-data-found";
+import { useGetListCustomer } from "apis/hooks/customer.query";
+import { Loading } from "components/Loading";
 
 export default function CustomerListPage() {
+  const { data: customerListData, isLoading: loadingGetListCustomer } =
+    useGetListCustomer();
+
   const {
     order,
     orderBy,
@@ -26,7 +31,9 @@ export default function CustomerListPage() {
     filteredList,
     handleChangePage,
     handleRequestSort,
-  } = useMuiTable({ listData: [] });
+  } = useMuiTable({ listData: customerListData?.data });
+
+  if (loadingGetListCustomer) return <Loading />;
 
   return (
     <Box py={4}>

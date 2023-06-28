@@ -1,8 +1,7 @@
 export const tableHeading = [
   { id: "name", label: "Name", align: "left" },
-  { id: "phone", label: "Phone", align: "left" },
-  { id: "email", label: "Email", align: "left" },
-  { id: "balance", label: "Wallet Balance", align: "left" },
-  { id: "orders", label: "No Of Orders", align: "left" },
+  { id: "customerId", label: "Customer ID", align: "left" },
+  { id: "address", label: "Address", align: "left" },
+  { id: "phoneNumber", label: "Phone", align: "center" },
   { id: "action", label: "Action", align: "center" },
 ];

@@ -9,37 +9,34 @@ import {
   StyledTableRow,
 } from "components/Table/StyledComponents";
 import { currency } from "utils";
+import { TGetListCustomers } from "types/api";
 
 // ========================================================================
-type CustomerRowProps = { customer: any };
+type CustomerRowProps = { customer: TGetListCustomers };
 // ========================================================================
 
 const CustomerRow: FC<CustomerRowProps> = ({ customer }) => {
-  const { email, name, phone, avatar, balance, orders } = customer;
+  const { name, customerId, address, phoneNumber } = customer;
 
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
-      <StyledTableCell align="left">
+      <StyledTableCell align="left" width="20%">
         <FlexBox alignItems="center" gap={1.5}>
-          <Avatar src={avatar} />
+          <Avatar src={""} />
           <Paragraph>{name}</Paragraph>
         </FlexBox>
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={{ fontWeight: 400 }}>
-        {phone}
+        {customerId}
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={{ fontWeight: 400 }}>
-        {email}
+        {address}
       </StyledTableCell>
 
       <StyledTableCell align="left" sx={{ fontWeight: 400 }}>
-        {currency(balance)}
-      </StyledTableCell>
-
-      <StyledTableCell align="left" sx={{ fontWeight: 400 }}>
-        {orders}
+        {phoneNumber}
       </StyledTableCell>
 
       <StyledTableCell align="center">
