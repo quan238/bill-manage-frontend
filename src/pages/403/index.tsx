@@ -4,9 +4,6 @@ import BazaarImage from "./components/BazaarImage";
 import { FlexBox, FlexRowCenter } from "components/Flex-box";
 
 const Error403 = () => {
-  const navigate = useNavigate();
-  const handleGoBack = () => navigate(-1);
-
   return (
     <FlexRowCenter px={2} minHeight="100vh" flexDirection="column">
       {/* <SEO title="Nothing found" /> */}

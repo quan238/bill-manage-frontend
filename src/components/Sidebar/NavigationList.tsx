@@ -17,7 +17,7 @@ export const navigations = [
       { name: "Customer List", path: "/customers" },
       {
         name: "Create customer",
-        path: "/create-customer",
+        path: "/customers/create-customer",
       },
     ],
   },

@@ -8,15 +8,20 @@ import {
   StyledTableCell,
   StyledTableRow,
 } from "components/Table/StyledComponents";
-import { currency } from "utils";
-import { TGetListCustomers } from "types/api";
+import { TGetCustomer } from "types/api";
+import { useNavigate } from "react-router-dom";
 
 // ========================================================================
-type CustomerRowProps = { customer: TGetListCustomers };
+type CustomerRowProps = { customer: TGetCustomer };
 // ========================================================================
 
 const CustomerRow: FC<CustomerRowProps> = ({ customer }) => {
-  const { name, customerId, address, phoneNumber } = customer;
+  const { name, customerId, address, phoneNumber, _id } = customer;
+  const navigate = useNavigate();
+
+  const handleEditCustomer = () => {
+    navigate(`/customers/edit-customer/${_id}`);
+  };
 
   return (
     <StyledTableRow tabIndex={-1} role="checkbox">
@@ -40,7 +45,7 @@ const CustomerRow: FC<CustomerRowProps> = ({ customer }) => {
       </StyledTableCell>
 
       <StyledTableCell align="center">
-        <StyledIconButton>
+        <StyledIconButton onClick={handleEditCustomer}>
           <Edit />
         </StyledIconButton>
 

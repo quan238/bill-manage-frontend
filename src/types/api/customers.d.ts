@@ -1,4 +1,4 @@
-export type TGetListCustomers = {
+export type TGetCustomer = {
   _id: string;
   customerId: string;
   name: string;
@@ -16,3 +16,5 @@ export type TCreateCustomer = {
   email?: string;
   note?: string;
 };
+
+export type TUpdateCustomer = Omit<TCreateCustomer, "customerId">;

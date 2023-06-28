@@ -14,7 +14,11 @@ export type TApiReponse<T> = {
   data: T;
 };
 
-export type TCreateReponse = {
+export type TGetReponse<T> = {
+  data: T;
+};
+
+export type TCreateUpdateReponse = {
   data: {
     _id: string;
   };

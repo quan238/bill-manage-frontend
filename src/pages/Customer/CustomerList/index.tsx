@@ -43,7 +43,7 @@ export default function CustomerListPage() {
       <SearchArea
         handleSearch={() => undefined}
         buttonText="Add Customer"
-        handleBtnClick={() => navigate("/create-customer")}
+        handleBtnClick={() => navigate("/customers/create-customer")}
         searchPlaceholder="Search Customer..."
       />
 

@@ -12,15 +12,16 @@ import { TCreateCustomer } from "types/api";
 
 // ================================================================
 type CustomerFormProps = {
+  type: "update" | "create";
   initialValues: TCreateCustomer;
   handleFormSubmit: (values: TCreateCustomer) => void;
-  validationSchema: yup.SchemaOf<TCreateCustomer>;
+  validationSchema: yup.SchemaOf<any>;
 };
 
 // ================================================================
 
 const CustomerForm: FC<CustomerFormProps> = (props) => {
-  const { initialValues, validationSchema, handleFormSubmit } = props;
+  const { initialValues, validationSchema, handleFormSubmit, type } = props;
 
   const [files, setFiles] = useState([]);
 
@@ -63,6 +64,7 @@ const CustomerForm: FC<CustomerFormProps> = (props) => {
                   size="medium"
                   placeholder="Mã Khách Hàng"
                   value={values.customerId}
+                  disabled={type === "update"}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   error={!!touched.customerId && !!errors.customerId}
@@ -174,7 +176,7 @@ const CustomerForm: FC<CustomerFormProps> = (props) => {
 
               <Grid item xs={12}>
                 <Button variant="contained" color="info" type="submit">
-                  Create Customer
+                  {type === "create" ? "Create" : "Update"} Customer
                 </Button>
               </Grid>
             </Grid>

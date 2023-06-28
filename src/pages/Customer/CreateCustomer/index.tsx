@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { H3 } from "components/Typography";
 import React from "react";
-import CustomerForm from "./CustomerForm";
+import CustomerForm from "../CustomerForm";
 import * as yup from "yup";
 import { TCreateCustomer } from "types/api";
 import { useCreateCustomer } from "apis";
@@ -28,7 +28,7 @@ const validationSchema = yup.object().shape({
   note: yup.string().optional(),
 });
 
-export default function CustomerPage() {
+export default function CreateCustomerPage() {
   const { mutate: createCustomer, isLoading: loadingCreateCustomer } =
     useCreateCustomer(); // Create Draft || Submit GOP first time
   const navigate = useNavigate();

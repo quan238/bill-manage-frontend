@@ -14,6 +14,9 @@ const CustomerListPage = Loadable(
 const CreateCustomerPage = Loadable(
   lazy(() => import("pages/Customer/CreateCustomer"))
 );
+const UpdateCustomerPage = Loadable(
+  lazy(() => import("pages/Customer/UpdateCustomer"))
+);
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -35,12 +38,22 @@ const MainRoutes = {
     },
     {
       path: "/customers",
-      element: <CustomerListPage />,
+      children: [
+        {
+          path: "/customers",
+          element: <CustomerListPage />,
+        },
+        {
+          path: "/customers/create-customer",
+          element: <CreateCustomerPage />,
+        },
+        {
+          path: "/customers/edit-customer/:id",
+          element: <UpdateCustomerPage />,
+        },
+      ],
     },
-    {
-      path: "/create-customer",
-      element: <CreateCustomerPage />,
-    },
+
     {
       path: "/billings",
       element: <BillingPage />,
