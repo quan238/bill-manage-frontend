@@ -1,18 +1,20 @@
+import { FC } from "react";
 import { Search } from "@mui/icons-material";
 import { InputBase, InputBaseProps, styled } from "@mui/material";
-import { FC } from "react";
 
+// styled component
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   height: 44,
-  width: "100%",
   fontSize: 14,
+  width: "100%",
   maxWidth: 350,
   fontWeight: 500,
   padding: "0 1rem",
   borderRadius: "8px",
   color: theme.palette.grey[600],
-  border: `1px solid ${theme.palette.grey[500]}`,
-  background: theme.palette.background.paper,
+  backgroundColor: theme.palette.background.paper,
+  [theme.breakpoints.down("sm")]: { maxWidth: "100%" },
+  "::placeholder": { color: theme.palette.text.disabled },
 }));
 
 const SearchInput: FC<InputBaseProps> = (props) => {

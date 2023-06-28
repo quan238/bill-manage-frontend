@@ -8,7 +8,7 @@ import { ProtectedRoute } from "./ProtectedRoutes";
 // render
 const DashboardPage = Loadable(lazy(() => import("pages/Dashboard")));
 const BillingPage = Loadable(lazy(() => import("pages/Billings")));
-const CustomerPage = Loadable(lazy(() => import("pages/Customers")));
+const CustomerListPage = Loadable(lazy(() => import("pages/CustomerList")));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -30,7 +30,7 @@ const MainRoutes = {
     },
     {
       path: "/customers",
-      element: <CustomerPage />,
+      element: <CustomerListPage />,
     },
     {
       path: "/billings",

@@ -1,4 +1,4 @@
 export * from "./Dashboard";
 export * from "./Billings";
-export * from "./Customers";
+export * from "./CustomerList";
 export * from "./Login";

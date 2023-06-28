@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, Box, IconButton, Menu, MenuItem, styled } from "@mui/material";
 import { H6, Small } from "components/Typography";
+import { useAuth } from "hooks/useAuth";
 
 // styled components
 const Divider = styled(Box)(({ theme }) => ({
@@ -14,7 +15,7 @@ const AccountPopover = () => {
 
   const handleClose = () => setAnchorEl(null);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
-
+  const { logout } = useAuth();
   return (
     <Box>
       <IconButton
@@ -77,7 +78,7 @@ const AccountPopover = () => {
         <MenuItem>Settings</MenuItem>
 
         <Divider />
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </Box>
   );
